@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NPA · Nasci Pra Te Amar · 10 Anos</title>
+  <meta name="description" content="Memorial dos 10 anos do Acampamento NPA (Nasci Pra Te Amar). 10, 11 e 12 de outubro de 2026.">
+  <meta name="theme-color" content="#0a0610">
+  <meta property="og:title" content="NPA · 10 Anos · Nasci Pra Te Amar">
+  <meta property="og:description" content="Uma década de amor, fé e gratidão. 10, 11 e 12 de outubro.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <canvas id="particulas" aria-hidden="true"></canvas>
+
+  <header class="nav" id="nav">
+    <a href="#inicio" class="nav__logo">NPA<span>10</span></a>
+    <button class="nav__toggle" id="navToggle" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span></button>
+    <nav class="nav__links" id="navLinks">
+      <a href="#historia">História</a>
+      <a href="#linha">Linha do tempo</a>
+      <a href="#galeria">Galeria</a>
+      <a href="#videos">Vídeos</a>
+      <a href="#depoimentos">Testemunhos</a>
+      <a href="#2026" class="nav__cta">10 anos</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero" id="inicio">
+    <div class="hero__glow"></div>
+    <div class="hero__cross" aria-hidden="true"></div>
+    <div class="hero__content">
+      <p class="hero__eyebrow reveal">Acampamento Católico · 2016 — 2026</p>
+      <h1 class="hero__title reveal">
+        <span class="hero__ten">10</span>
+        <span class="hero__anos">anos</span>
+      </h1>
+      <p class="hero__npa reveal">NPA</p>
+      <p class="hero__name reveal">Nasci Pra Te Amar</p>
+      <p class="hero__dates reveal"><span>10</span><i></i><span>11</span><i></i><span>12</span> <em>de outubro</em></p>
+
+      <div class="countdown reveal" id="countdown" aria-live="polite">
+        <div><b id="cd-d">00</b><small>dias</small></div>
+        <div><b id="cd-h">00</b><small>horas</small></div>
+        <div><b id="cd-m">00</b><small>min</small></div>
+        <div><b id="cd-s">00</b><small>seg</small></div>
+      </div>
+
+      <a href="#historia" class="hero__scroll" aria-label="Rolar para baixo"><span></span></a>
+    </div>
+  </section>
+
+  <!-- VERSÍCULO -->
+  <section class="verse">
+    <blockquote class="reveal">
+      <p>“Nós amamos, porque Ele nos amou primeiro.”</p>
+      <cite>1 João 4,19</cite>
+    </blockquote>
+  </section>
+
+  <!-- HISTÓRIA -->
+  <section class="section historia" id="historia">
+    <div class="section__head reveal">
+      <span class="section__kicker">Nossa história</span>
+      <h2>Uma década de <em>amor</em></h2>
+    </div>
+    <div class="historia__grid">
+      <div class="historia__text reveal">
+        <p>Há dez anos, um grupo de jovens decidiu responder a um chamado simples e profundo: <strong>nós nascemos para amar</strong>. Amar a Deus, amar a Igreja, amar o irmão que está ao nosso lado.</p>
+        <p>Assim nasceu o <strong>NPA — Nasci Pra Te Amar</strong>. Ano após ano, centenas de campistas e servos viveram dias de oração, louvor, partilha, lágrimas e muitas risadas. Vidas foram tocadas, vocações despertaram, amizades viraram família.</p>
+        <p>Este memorial guarda cada um desses momentos. É a nossa forma de dizer <em>obrigado</em> — a Deus e a cada pessoa que fez parte dessa história.</p>
+      </div>
+      <div class="stats reveal">
+        <div class="stat"><b data-count="10">0</b><span>anos de história</span></div>
+        <div class="stat"><b data-count="11">0</b><span>edições</span></div>
+        <div class="stat"><b data-count="1000" data-suffix="+">0</b><span>vidas tocadas</span></div>
+        <div class="stat"><b data-count="3">0</b><span>dias de encontro</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LINHA DO TEMPO -->
+  <section class="section linha" id="linha">
+    <div class="section__head reveal">
+      <span class="section__kicker">2016 — 2026</span>
+      <h2>Linha do <em>tempo</em></h2>
+      <p>Toque em um ano para reviver as fotos daquela edição.</p>
+    </div>
+    <div class="timeline" id="timeline"></div>
+  </section>
+
+  <!-- GALERIA -->
+  <section class="section galeria" id="galeria">
+    <div class="section__head reveal">
+      <span class="section__kicker">Memórias</span>
+      <h2>Galeria</h2>
+    </div>
+    <div class="filtros reveal" id="filtros" role="tablist"></div>
+    <div class="masonry" id="masonry"></div>
+    <p class="galeria__vazio" id="galeriaVazio" hidden>As fotos desta edição estão chegando. 💜</p>
+  </section>
+
+  <!-- VÍDEOS -->
+  <section class="section videos" id="videos">
+    <div class="section__head reveal">
+      <span class="section__kicker">Reviva</span>
+      <h2>Vídeos</h2>
+    </div>
+    <div class="videos__grid" id="videosGrid"></div>
+  </section>
+
+  <!-- DEPOIMENTOS -->
+  <section class="section depoimentos" id="depoimentos">
+    <div class="section__head reveal">
+      <span class="section__kicker">Testemunhos</span>
+      <h2>O que o NPA <em>fez em nós</em></h2>
+    </div>
+    <div class="carrossel reveal" id="carrossel"></div>
+    <div class="carrossel__dots" id="carrosselDots"></div>
+  </section>
+
+  <!-- 2026 -->
+  <section class="section edicao" id="2026">
+    <div class="edicao__card reveal">
+      <span class="section__kicker">Edição comemorativa</span>
+      <h2>NPA <em>10 anos</em></h2>
+      <p class="edicao__datas">10 · 11 · 12 de outubro de 2026</p>
+      <p>Três dias para agradecer, celebrar e renovar o nosso “sim”. Campistas de todas as edições, servos, famílias e amigos: este encontro é de todos nós.</p>
+      <a href="#galeria" class="btn">Reviver as memórias</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p class="footer__logo">NPA</p>
+    <p>Nasci Pra Te Amar · Acampamento Católico</p>
+    <p class="footer__small">2016 — 2026 · Feito com 💜 para a glória de Deus</p>
+  </footer>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Visualizar foto" hidden>
+    <button class="lightbox__close" id="lbClose" aria-label="Fechar">×</button>
+    <button class="lightbox__nav lightbox__prev" id="lbPrev" aria-label="Anterior">‹</button>
+    <figure><img id="lbImg" alt=""><figcaption id="lbCap"></figcaption></figure>
+    <button class="lightbox__nav lightbox__next" id="lbNext" aria-label="Próxima">›</button>
+  </div>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
