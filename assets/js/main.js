@@ -4,7 +4,6 @@
   const $ = (s, el = document) => el.querySelector(s);
   const pad = (n) => String(n).padStart(2, "0");
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-  const primeiroAno = D.anos[0].ano;
 
   /* ---------- NAV ---------- */
   const nav = $("#nav"), toggle = $("#navToggle"), links = $("#navLinks");
@@ -51,11 +50,11 @@
             ${capa ? "" : `<span>${a.ano}</span>`}
           </div>
           <div class="tl-card__body">
-            <span class="tl-card__ed">${i + 1}ª edição</span>
+            <span class="tl-card__ed">${i + 1}ª edição${a.participantes ? ` · ${a.participantes} jovens` : ""}</span>
             <div class="tl-card__ano">${a.ano}</div>
             <h3>${esc(a.titulo)}</h3>
             <p>${esc(a.texto)}</p>
-            <span class="tl-card__mais">${a.fotos.length ? `${a.fotos.length} fotos →` : "Ver memórias →"}</span>
+            <span class="tl-card__mais">${a.fotos.length ? `Ver ${a.fotos.length} fotos →` : "Fotos em breve"}</span>
           </div>
         </button>
       </div>`;
@@ -63,33 +62,29 @@
   tl.addEventListener("click", (e) => {
     const card = e.target.closest(".tl-card");
     if (!card) return;
-    filtrar(card.dataset.ano);
+    const temFotos = todas.some((f) => String(f.ano) === card.dataset.ano);
+    filtrar(temFotos ? card.dataset.ano : "todos");
     $("#galeria").scrollIntoView({ behavior: "smooth" });
   });
 
   /* ---------- GALERIA ---------- */
-  const todas = D.anos.flatMap((a) => a.fotos.map((src) => ({ src, ano: a.ano })));
+  const todas = D.anos.flatMap((a) => a.fotos.map((src) => ({ src, ano: a.ano })))
+    .concat((D.momentos || []).map((src) => ({ src, ano: null })));
+  const anosComFotos = D.anos.filter((a) => a.fotos.length).map((a) => a.ano);
   const filtros = $("#filtros"), masonry = $("#masonry"), vazio = $("#galeriaVazio");
   filtros.innerHTML = [`<button role="tab" data-ano="todos" aria-selected="true">Todos</button>`]
-    .concat(D.anos.map((a) => `<button role="tab" data-ano="${a.ano}" aria-selected="false">${a.ano}</button>`)).join("");
+    .concat(anosComFotos.map((a) => `<button role="tab" data-ano="${a}" aria-selected="false">${a}</button>`)).join("");
+  filtros.hidden = !anosComFotos.length;
   filtros.addEventListener("click", (e) => { if (e.target.dataset.ano) filtrar(e.target.dataset.ano); });
 
   let visiveis = [];
   function filtrar(ano) {
     filtros.querySelectorAll("button").forEach((b) => b.setAttribute("aria-selected", b.dataset.ano === String(ano)));
     visiveis = ano === "todos" ? todas : todas.filter((f) => String(f.ano) === String(ano));
-    if (!visiveis.length) {
-      // Placeholders elegantes até as fotos chegarem
-      const anos = ano === "todos" ? D.anos.map((a) => a.ano) : [ano];
-      const ratios = [1.33, .75, 1, 1.5, .8, 1.2];
-      masonry.innerHTML = Array.from({ length: ano === "todos" ? 12 : 8 }, (_, i) =>
-        `<figure class="ph" style="--r:${ratios[i % ratios.length]};animation-delay:${i * 40}ms"><span>${anos[i % anos.length]}</span></figure>`).join("");
-      vazio.hidden = false;
-      return;
-    }
+    if (!visiveis.length) { masonry.innerHTML = ""; vazio.hidden = false; return; }
     vazio.hidden = true;
     masonry.innerHTML = visiveis.map((f, i) =>
-      `<figure data-i="${i}" data-ano="${f.ano}" style="animation-delay:${Math.min(i, 20) * 30}ms"><img src="${esc(f.src)}" alt="NPA ${f.ano}" loading="lazy" decoding="async"></figure>`).join("");
+      `<figure data-i="${i}" data-ano="${f.ano || ""}" style="animation-delay:${Math.min(i, 20) * 30}ms"><img src="${esc(f.src)}" alt="NPA${f.ano ? " " + f.ano : ""}" loading="lazy" decoding="async"></figure>`).join("");
   }
   masonry.addEventListener("click", (e) => { const f = e.target.closest("figure[data-i]"); if (f) abrir(+f.dataset.i); });
   filtrar("todos");
@@ -101,8 +96,8 @@
   function fechar() { lb.hidden = true; document.body.style.overflow = ""; }
   function mostrar() {
     const f = visiveis[atual];
-    lbImg.src = f.src; lbImg.alt = `NPA ${f.ano}`;
-    lbCap.textContent = `NPA ${f.ano} · ${atual + 1} / ${visiveis.length}`;
+    lbImg.src = f.src; lbImg.alt = `NPA${f.ano ? " " + f.ano : ""}`;
+    lbCap.textContent = `NPA${f.ano ? " " + f.ano : ""} · ${atual + 1} / ${visiveis.length}`;
   }
   const passo = (d) => { atual = (atual + d + visiveis.length) % visiveis.length; mostrar(); };
   $("#lbClose").onclick = fechar;
@@ -132,7 +127,7 @@
     vg.innerHTML = D.videos.map((v, i) => {
       const thumb = v.youtube ? `https://i.ytimg.com/vi/${esc(v.youtube)}/hqdefault.jpg` : (v.capa || "");
       return `
-        <article class="video reveal">
+        <article class="video reveal ${v.vertical ? "video--vertical" : ""}">
           <div class="video__frame" data-i="${i}" style="${thumb ? `background-image:url('${thumb}')` : "background:var(--roxo-escuro)"}">
             <button class="video__play" aria-label="Assistir ${esc(v.titulo)}"><span></span></button>
           </div>
@@ -143,6 +138,10 @@
       const fr = e.target.closest(".video__frame");
       if (!fr || fr.querySelector("iframe")) return;
       const v = D.videos[fr.dataset.i];
+      if (v.arquivo) {
+        fr.innerHTML = `<video src="${esc(v.arquivo)}" controls autoplay playsinline ${v.capa ? `poster="${esc(v.capa)}"` : ""}></video>`;
+        return;
+      }
       const src = v.youtube
         ? `https://www.youtube-nocookie.com/embed/${encodeURIComponent(v.youtube)}?autoplay=1&rel=0`
         : `https://drive.google.com/file/d/${encodeURIComponent(v.drive)}/preview`;
@@ -153,29 +152,51 @@
   /* ---------- DEPOIMENTOS ---------- */
   const car = $("#carrossel"), dots = $("#carrosselDots");
   car.innerHTML = D.depoimentos.map((d, i) =>
-    `<blockquote class="depo ${i ? "" : "is-active"}"><p>${esc(d.texto)}</p><footer>${esc(d.autor)}${d.ano ? ` · NPA ${d.ano}` : ""}</footer></blockquote>`).join("");
+    `<blockquote class="depo ${i ? "" : "is-active"}"><p>${esc(d.texto)}</p><footer>${esc(d.autor)}${d.ano ? ` · participante ${d.ano}` : ""}</footer></blockquote>`).join("");
   dots.innerHTML = D.depoimentos.map((_, i) => `<button aria-label="Testemunho ${i + 1}" class="${i ? "" : "is-active"}"></button>`).join("");
   let di = 0, timer;
   function irPara(i) {
     di = i;
     car.querySelectorAll(".depo").forEach((el, j) => el.classList.toggle("is-active", j === i));
     dots.querySelectorAll("button").forEach((el, j) => el.classList.toggle("is-active", j === i));
-    clearInterval(timer); timer = setInterval(() => irPara((di + 1) % D.depoimentos.length), 6500);
+    clearInterval(timer); timer = setInterval(() => irPara((di + 1) % D.depoimentos.length), 9000);
   }
   dots.addEventListener("click", (e) => { const b = [...dots.children].indexOf(e.target); if (b >= 0) irPara(b); });
   irPara(0);
 
   /* ---------- ESTATÍSTICAS ---------- */
-  $('.stat b[data-count="11"]').dataset.count = D.anos.length;
-  $('.stat b[data-count="10"]').dataset.count = new Date(D.eventoInicio).getFullYear() - primeiroAno;
   function contar(el) {
     const alvo = +el.dataset.count, suf = el.dataset.suffix || "", t0 = performance.now();
     const step = (t) => {
       const p = Math.min((t - t0) / 1600, 1);
-      el.textContent = Math.round(alvo * (1 - Math.pow(1 - p, 3))) + (p === 1 ? suf : "");
+      el.textContent = Math.round(alvo * (1 - Math.pow(1 - p, 3))).toLocaleString("pt-BR") + (p === 1 ? suf : "");
       if (p < 1) requestAnimationFrame(step);
     };
     requestAnimationFrame(step);
+  }
+
+  /* ---------- PROGRAMAÇÃO ---------- */
+  $("#progAntes").innerHTML = (D.antes || []).map((a) => `<b>${esc(a.data)}</b> ${esc(a.texto)}`).join(" &nbsp;·&nbsp; ");
+  $("#dias").innerHTML = D.programacao.map((d, i) => `
+    <article class="dia reveal">
+      <header><span class="dia__n">Dia ${i + 1}</span><b>${esc(d.data)}</b><small>${esc(d.dia)}</small></header>
+      <h3>${esc(d.nome)}</h3>
+      <ul>${d.itens.map((it) => `<li>${esc(it)}</li>`).join("")}</ul>
+    </article>`).join("");
+
+  /* ---------- FUNDO DA ABERTURA ---------- */
+  const bg = $("#heroBg"), fundos = D.fundoHero || [];
+  if (fundos.length) {
+    bg.innerHTML = fundos.map((src, i) => `<div style="background-image:url('${esc(src)}')" class="${i ? "" : "is-on"}"></div>`).join("");
+    let hi = 0;
+    if (!matchMedia("(prefers-reduced-motion: reduce)").matches && fundos.length > 1) {
+      setInterval(() => {
+        const s = bg.children;
+        s[hi].classList.remove("is-on");
+        hi = (hi + 1) % s.length;
+        s[hi].classList.add("is-on");
+      }, 6000);
+    }
   }
 
   /* ---------- REVEAL ---------- */

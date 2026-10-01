@@ -27,16 +27,17 @@
       <a href="#galeria">Galeria</a>
       <a href="#videos">Vídeos</a>
       <a href="#depoimentos">Testemunhos</a>
-      <a href="#2026" class="nav__cta">10 anos</a>
+      <a href="#programacao" class="nav__cta">NPA 2026</a>
     </nav>
   </header>
 
   <!-- HERO -->
   <section class="hero" id="inicio">
+    <div class="hero__bg" id="heroBg" aria-hidden="true"></div>
     <div class="hero__glow"></div>
     <div class="hero__cross" aria-hidden="true"></div>
     <div class="hero__content">
-      <p class="hero__eyebrow reveal">Acampamento Católico · 2016 — 2026</p>
+      <p class="hero__eyebrow reveal">Acampamento Jovem · 2017 — 2026</p>
       <h1 class="hero__title reveal">
         <span class="hero__ten">10</span>
         <span class="hero__anos">anos</span>
@@ -72,25 +73,31 @@
     </div>
     <div class="historia__grid">
       <div class="historia__text reveal">
-        <p>Há dez anos, um grupo de jovens decidiu responder a um chamado simples e profundo: <strong>nós nascemos para amar</strong>. Amar a Deus, amar a Igreja, amar o irmão que está ao nosso lado.</p>
-        <p>Assim nasceu o <strong>NPA — Nasci Pra Te Amar</strong>. Ano após ano, centenas de campistas e servos viveram dias de oração, louvor, partilha, lágrimas e muitas risadas. Vidas foram tocadas, vocações despertaram, amizades viraram família.</p>
-        <p>Este memorial guarda cada um desses momentos. É a nossa forma de dizer <em>obrigado</em> — a Deus e a cada pessoa que fez parte dessa história.</p>
+        <p>O <strong>Acampamento Nasci Pra Te Amar</strong> nasceu de uma forte experiência de encontro com Deus vivida por seus fundadores em um acampamento da Comunidade Shalom. Dali surgiu o desejo de proporcionar essa mesma vivência aos jovens da <strong>Paróquia Santo Amaro de Ipitanga</strong>.</p>
+        <p>Com o tempo, a ideia amadureceu, novas pessoas foram chamadas e o projeto tomou forma. O nome expressa a essência dessa experiência, inspirado na frase que marcou esse chamado: <em>“Nasci pra te amar, meu Senhor!”</em></p>
+        <p>Desde 2017 foram nove edições, com cerca de 792 jovens. Retornos à vida sacramental, novas lideranças, vocações e testemunhos de cura e conversão. Em 2026, vivemos o tão esperado <strong>décimo ano</strong>.</p>
       </div>
       <div class="stats reveal">
         <div class="stat"><b data-count="10">0</b><span>anos de história</span></div>
-        <div class="stat"><b data-count="11">0</b><span>edições</span></div>
-        <div class="stat"><b data-count="1000" data-suffix="+">0</b><span>vidas tocadas</span></div>
-        <div class="stat"><b data-count="3">0</b><span>dias de encontro</span></div>
+        <div class="stat"><b data-count="792" data-suffix="+">0</b><span>jovens alcançados</span></div>
+        <div class="stat"><b data-count="9">0</b><span>edições vividas</span></div>
+        <div class="stat"><b data-count="124">0</b><span>recorde (2021)</span></div>
       </div>
+    </div>
+
+    <div class="pilares">
+      <article class="pilar reveal"><span>01</span><h3>Missão</h3><p>Evangelizar os jovens e conduzi-los a um encontro verdadeiro com Deus, para que descubram sua identidade, vivam o amor de Cristo e se tornem protagonistas na Igreja e na sociedade.</p></article>
+      <article class="pilar reveal"><span>02</span><h3>Caminho</h3><p>Três etapas: <em>encontro</em> com o amor de Deus, <em>cura</em> das feridas e reconciliação, e <em>envio</em> para uma vida nova.</p></article>
+      <article class="pilar reveal"><span>03</span><h3>Diferencial</h3><p>Pregações, oficinas, oração, adoração, teatro e experiências preparadas com dedicação pelos servos, para que cada jovem descubra que nasceu para ser amado por Deus.</p></article>
     </div>
   </section>
 
   <!-- LINHA DO TEMPO -->
   <section class="section linha" id="linha">
     <div class="section__head reveal">
-      <span class="section__kicker">2016 — 2026</span>
+      <span class="section__kicker">2017 — 2026</span>
       <h2>Linha do <em>tempo</em></h2>
-      <p>Toque em um ano para reviver as fotos daquela edição.</p>
+      <p>Dez edições, uma mesma certeza. Toque em um ano para ver as fotos.</p>
     </div>
     <div class="timeline" id="timeline"></div>
   </section>
@@ -120,26 +127,40 @@
     <div class="section__head reveal">
       <span class="section__kicker">Testemunhos</span>
       <h2>O que o NPA <em>fez em nós</em></h2>
+      <p>Palavras de quem viveu o NPA.</p>
     </div>
     <div class="carrossel reveal" id="carrossel"></div>
     <div class="carrossel__dots" id="carrosselDots"></div>
   </section>
 
+  <!-- PROGRAMAÇÃO -->
+  <section class="section programacao" id="programacao">
+    <div class="section__head reveal">
+      <span class="section__kicker">NPA 2026</span>
+      <h2>Três dias de <em>graça</em></h2>
+      <p id="progAntes"></p>
+    </div>
+    <div class="dias" id="dias"></div>
+  </section>
+
   <!-- 2026 -->
   <section class="section edicao" id="2026">
     <div class="edicao__card reveal">
+      <video class="edicao__bg" src="assets/video/npa-igreja.mp4" poster="assets/video/npa-igreja.jpg" autoplay muted loop playsinline aria-hidden="true"></video>
       <span class="section__kicker">Edição comemorativa</span>
       <h2>NPA <em>10 anos</em></h2>
       <p class="edicao__datas">10 · 11 · 12 de outubro de 2026</p>
-      <p>Três dias para agradecer, celebrar e renovar o nosso “sim”. Campistas de todas as edições, servos, famílias e amigos: este encontro é de todos nós.</p>
+      <p class="edicao__frase">“Não é apenas um acampamento, é uma história que marcou gerações. NPA para sempre. 10 anos de graça, amor e transformação.”</p>
+      <p>Campistas de todas as edições, servos, famílias e amigos: este encontro é de todos nós.</p>
       <a href="#galeria" class="btn">Reviver as memórias</a>
     </div>
   </section>
 
   <footer class="footer">
     <p class="footer__logo">NPA</p>
-    <p>Nasci Pra Te Amar · Acampamento Católico</p>
-    <p class="footer__small">2016 — 2026 · Feito com 💜 para a glória de Deus</p>
+    <p>Acampamento Jovem Nasci Pra Te Amar</p>
+    <p>Paróquia Santo Amaro de Ipitanga · Pároco Pe. Anastacio Gilberto</p>
+    <p class="footer__small">2017 — 2026 · Feito com 💜 para a glória de Deus</p>
   </footer>
 
   <!-- LIGHTBOX -->
