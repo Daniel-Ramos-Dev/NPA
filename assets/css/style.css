@@ -351,3 +351,10 @@ section, header, footer { position: relative; z-index: 1; }
 .apoio__botoes .btn { margin-top: 0; text-transform: none; letter-spacing: .02em; }
 .btn--zap { background: linear-gradient(90deg, #128c4a, #25d366); box-shadow: 0 10px 30px -12px #25d366; }
 .btn--linha { background: transparent; border: 1px solid var(--lilas); box-shadow: none; }
+.tl-card__breve {
+  position: absolute; z-index: 2; top: 16px; right: 16px; font-style: normal; font-family: var(--sans);
+  font-size: .72rem; font-weight: 800; letter-spacing: .24em; text-transform: uppercase;
+  padding: 7px 14px; border-radius: 99px; color: #fff; background: linear-gradient(90deg, var(--roxo), var(--roxo-vivo));
+  box-shadow: 0 0 24px -2px var(--roxo-vivo); animation: piscar 2.4s ease-in-out infinite;
+}
+@keyframes piscar { 50% { box-shadow: 0 0 6px -2px var(--roxo-vivo); opacity: .8; } }

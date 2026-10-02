@@ -51,6 +51,7 @@
         <button class="tl-card" data-ano="${a.ano}" aria-label="Ver fotos de ${a.ano}">
           <div class="tl-card__img ${capa ? "" : "tl-card__img--vazio"}" ${capa ? `style="background-image:url('${esc(capa)}')"` : ""}>
             ${capa ? "" : `<span>${a.ano}</span>`}
+            ${a.destaque && !a.fotos.length ? `<em class="tl-card__breve">Em breve</em>` : ""}
           </div>
           <div class="tl-card__body">
             <span class="tl-card__ed">${i + 1}ª edição${a.participantes ? ` · ${a.participantes} jovens` : ""}</span>
@@ -58,6 +59,7 @@
             <h3>${esc(a.titulo)}</h3>
             <p>${esc(a.texto)}</p>
             ${rotulados.includes(a.ano) && a.fotos.length ? `<span class="tl-card__mais">Ver ${a.fotos.length} fotos →</span>` : ""}
+            ${a.destaque && !a.fotos.length ? `<span class="tl-card__mais">As fotos chegam logo depois do acampamento 💜</span>` : ""}
           </div>
         </button>
       </div>`;
