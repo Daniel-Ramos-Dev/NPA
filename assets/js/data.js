@@ -6,6 +6,8 @@
    ========================================================= */
 
 const F = "assets/img/fotos/";
+// Lista gerada automaticamente em assets/js/fotos.js (uma lista por ano)
+const FOTOS = (ano) => (window.NPA_FOTOS || {})[ano] || [];
 
 window.NPA = {
   // Início do acampamento (horário de Brasília). A contagem regressiva usa esta data.
@@ -26,31 +28,20 @@ window.NPA = {
   // Uma entrada por edição. "fotos": caminhos das imagens daquele ano.
   // "capa": foto do card na linha do tempo (se vazio, usa a 1ª foto).
   anos: [
-    { ano: 2017, participantes: 75,  titulo: "O começo de tudo", texto: "Cinco jovens disseram “sim”. Nasce o primeiro Nasci Pra Te Amar, inspirado num acampamento da Comunidade Shalom.", capa: "", fotos: [] },
-    { ano: 2018, participantes: 84,  titulo: "A semente cresce", texto: "O sonho criou raízes e novos jovens chegaram para viver o encontro com o amor de Deus.", capa: "", fotos: [] },
-    { ano: 2019, participantes: 88,  titulo: "Família", texto: "Amizades que viraram família e corações que descobriram que são amados.", capa: "", fotos: [] },
-    { ano: 2020, participantes: 66,  titulo: "Fé que não para", texto: "Mesmo num ano difícil para o mundo, o amor de Deus reuniu a juventude.", capa: "", fotos: [] },
-    { ano: 2021, participantes: 124, titulo: "A maior edição", texto: "124 jovens: o recorde de participantes e muitos testemunhos de vidas transformadas.", capa: "", fotos: [] },
-    { ano: 2022, participantes: 77,  titulo: "Um novo começo", texto: "Para muitos, o primeiro acampamento e o início de uma caminhada de fé.", capa: "", fotos: [] },
-    { ano: 2023, participantes: 79,  titulo: "Divisor de águas", texto: "Encontros com a misericórdia de Deus que mudaram o rumo de muitas vidas.", capa: "", fotos: [] },
-    { ano: 2024, participantes: 96,  titulo: "Enviados", texto: "Jovens que um dia foram campistas, agora servos, levando adiante o mesmo amor.", capa: "", fotos: [] },
-    { ano: 2025, participantes: 103, titulo: "Rumo aos 10", texto: "Mais de cem jovens preparando o caminho para a grande celebração da década.", capa: "", fotos: [] },
-    { ano: 2026, participantes: null, titulo: "10 anos · Memorial", texto: "10, 11 e 12 de outubro: celebramos uma década de graça, amor e transformação.", capa: "", fotos: [], destaque: true }
+    { ano: 2017, participantes: 75,  titulo: "O começo de tudo", texto: "Cinco jovens disseram “sim”. Nasce o primeiro Nasci Pra Te Amar, inspirado num acampamento da Comunidade Shalom.", capa: "assets/img/anos/2017/IMG-20171030-WA0050.webp", fotos: FOTOS(2017) },
+    { ano: 2018, participantes: 84,  titulo: "A semente cresce", texto: "O sonho criou raízes e novos jovens chegaram para viver o encontro com o amor de Deus.", capa: "", fotos: FOTOS(2018) },
+    { ano: 2019, participantes: 88,  titulo: "Família", texto: "Amizades que viraram família e corações que descobriram que são amados.", capa: "", fotos: FOTOS(2019) },
+    { ano: 2020, participantes: 66,  titulo: "Fé que não para", texto: "Mesmo num ano difícil para o mundo, o amor de Deus reuniu a juventude.", capa: "", fotos: FOTOS(2020) },
+    { ano: 2021, participantes: 124, titulo: "A maior edição", texto: "124 jovens: o recorde de participantes e muitos testemunhos de vidas transformadas.", capa: "", fotos: FOTOS(2021) },
+    { ano: 2022, participantes: 77,  titulo: "Um novo começo", texto: "Para muitos, o primeiro acampamento e o início de uma caminhada de fé.", capa: "", fotos: FOTOS(2022) },
+    { ano: 2023, participantes: 79,  titulo: "Divisor de águas", texto: "Encontros com a misericórdia de Deus que mudaram o rumo de muitas vidas.", capa: "", fotos: FOTOS(2023) },
+    { ano: 2024, participantes: 96,  titulo: "Enviados", texto: "Jovens que um dia foram campistas, agora servos, levando adiante o mesmo amor.", capa: "", fotos: FOTOS(2024) },
+    { ano: 2025, participantes: 103, titulo: "Rumo aos 10", texto: "Mais de cem jovens preparando o caminho para a grande celebração da década.", capa: "assets/img/anos/2025/IMG_5928.webp", fotos: FOTOS(2025) },
+    { ano: 2026, participantes: null, titulo: "10 anos · Memorial", texto: "10, 11 e 12 de outubro: celebramos uma década de graça, amor e transformação.", capa: "", fotos: FOTOS(2026), destaque: true }
   ],
 
-  // Fotos sem ano definido (vindas da revista dos 10 anos).
-  // Para mover uma foto para um ano, tire daqui e coloque em "fotos" do ano certo.
-  // Grupos da seção "Registros" da revista, pela cor da camisa:
-  //   p019 verde · p020 amarela/preta · p021 branca · p022 azul e rosa
-  //   p023 máscaras · p024 rosa · p025 amarela · p026 verde-água
-  momentos: [
-    "p022-039", "p019-027", "p006-003", "p009-008", "p020-032", "p003-001",
-    "p027-063", "p021-034", "p008-007", "p006-005", "p024-049", "p019-024",
-    "p010-009", "p023-044", "p020-028", "p007-006", "p026-059", "p021-033",
-    "p004-002", "p019-026", "p025-054", "p020-029", "p014-015", "p021-036",
-    "p019-023", "p020-030", "p026-060", "p021-035", "p019-025", "p020-031",
-    "p026-061", "p021-037", "p018-022", "p026-062"
-  ].map((n) => F + n + ".webp"),
+  // Fotos extras sem ano (caminhos completos). As fotos de cada ano vêm de assets/js/fotos.js.
+  momentos: [],
 
   // Vídeos. Tipos aceitos:
   //   { titulo, ano, arquivo: "assets/video/x.mp4", capa: "...jpg" }
@@ -58,6 +49,26 @@ window.NPA = {
   //   { titulo, ano, drive: "ID_DO_ARQUIVO" }   (arquivo do Drive aberto para "qualquer pessoa com o link")
   videos: [
     { titulo: "A alegria do NPA na igreja", ano: null, arquivo: "assets/video/npa-igreja.mp4", capa: "assets/video/npa-igreja.jpg" }
+  ],
+
+  // Vídeos curtos em pé (faixa deslizante). Cada item: caminho sem extensão (.mp4 e .jpg de capa).
+  clipes: [
+    "assets/video/2022/npa2022-01",
+    "assets/video/2022/npa2022-02",
+    "assets/video/2022/npa2022-03",
+    "assets/video/2022/npa2022-04",
+    "assets/video/2022/npa2022-06",
+    "assets/video/2022/npa2022-07",
+    "assets/video/2022/npa2022-08",
+    "assets/video/2022/npa2022-09",
+    "assets/video/2022/npa2022-10",
+    "assets/video/2022/npa2022-11",
+    "assets/video/2022/npa2022-12",
+    "assets/video/2022/npa2022-13",
+    "assets/video/2022/npa2022-14",
+    "assets/video/2022/npa2022-15",
+    "assets/video/2022/npa2022-16",
+    "assets/video/2022/npa2022-17"
   ],
 
   // Programação 2026 (Projeto NPA)

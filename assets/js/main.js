@@ -71,8 +71,17 @@
   });
 
   /* ---------- GALERIA ---------- */
-  const todas = D.anos.flatMap((a) => a.fotos.map((src) => ({ src, ano: rotulados.includes(a.ano) ? a.ano : null })))
-    .concat((D.momentos || []).map((src) => ({ src, ano: null })));
+  // Miniatura: assets/img/anos/2025/x.webp -> assets/img/anos/2025/mini/x.webp
+  const mini = (src) => src.replace(/(assets\/img\/anos\/\d+\/)([^/]+)$/, "$1mini/$2");
+  const foto = (src, ano) => ({ src, thumb: mini(src), ano: rotulados.includes(ano) ? ano : null });
+  // "Todos" intercala os anos para mostrar um pouco de cada edição
+  const porAno = D.anos.filter((a) => a.fotos.length).map((a) => a.fotos.map((src) => foto(src, a.ano)));
+  const todas = [];
+  for (let i = 0; porAno.some((l) => i < l.length); i++) porAno.forEach((l) => { if (l[i]) todas.push(l[i]); });
+  (D.momentos || []).forEach((src) => todas.push(foto(src, null)));
+  const POR_PAGINA = 36;
+  let mostradas = 0;
+  const maisBtn = $("#galeriaMais");
   const anosComFotos = D.anos.filter((a) => a.fotos.length && rotulados.includes(a.ano)).map((a) => a.ano);
   const filtros = $("#filtros"), masonry = $("#masonry"), vazio = $("#galeriaVazio");
   filtros.innerHTML = [`<button role="tab" data-ano="todos" aria-selected="true">Todos</button>`]
@@ -86,9 +95,22 @@
     visiveis = ano === "todos" ? todas : todas.filter((f) => String(f.ano) === String(ano));
     if (!visiveis.length) { masonry.innerHTML = ""; vazio.hidden = false; return; }
     vazio.hidden = true;
-    masonry.innerHTML = visiveis.map((f, i) =>
-      `<figure data-i="${i}" data-ano="${f.ano || ""}" style="animation-delay:${Math.min(i, 20) * 30}ms"><img src="${esc(f.src)}" alt="NPA${f.ano ? " " + f.ano : ""}" loading="lazy" decoding="async"></figure>`).join("");
+    masonry.innerHTML = "";
+    mostradas = 0;
+    maisFotos();
   }
+  function maisFotos() {
+    const lote = visiveis.slice(mostradas, mostradas + POR_PAGINA);
+    masonry.insertAdjacentHTML("beforeend", lote.map((f, j) => {
+      const i = mostradas + j;
+      return `<figure data-i="${i}" data-ano="${f.ano || ""}" style="animation-delay:${j * 25}ms"><img src="${esc(f.thumb)}" alt="NPA${f.ano ? " " + f.ano : ""}" loading="lazy" decoding="async" onerror="if(this.src.indexOf('/mini/')>-1)this.src=this.src.replace('/mini/','/')"></figure>`;
+    }).join(""));
+    mostradas += lote.length;
+    const resta = visiveis.length - mostradas;
+    maisBtn.hidden = resta <= 0;
+    maisBtn.textContent = `Ver mais fotos (${resta})`;
+  }
+  maisBtn.addEventListener("click", maisFotos);
   masonry.addEventListener("click", (e) => { const f = e.target.closest("figure[data-i]"); if (f) abrir(+f.dataset.i); });
   filtrar("todos");
 
@@ -151,6 +173,18 @@
       fr.innerHTML = `<iframe src="${src}" title="${esc(v.titulo)}" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>`;
     });
   }
+
+  /* ---------- CLIPES ---------- */
+  const cl = $("#clipes");
+  cl.innerHTML = (D.clipes || []).map((c) =>
+    `<button class="clipe" data-src="${esc(c)}.mp4" style="background-image:url('${esc(c)}.jpg')" aria-label="Assistir vídeo"><span></span></button>`).join("");
+  cl.addEventListener("click", (e) => {
+    const b = e.target.closest(".clipe");
+    if (!b) return;
+    cl.querySelectorAll("video").forEach((v) => v.pause());
+    if (b.querySelector("video")) return;
+    b.innerHTML = `<video src="${b.dataset.src}" autoplay controls playsinline></video>`;
+  });
 
   /* ---------- DEPOIMENTOS ---------- */
   const car = $("#carrossel"), dots = $("#carrosselDots");

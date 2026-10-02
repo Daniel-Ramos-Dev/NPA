@@ -25,3 +25,7 @@ Quando um ano tem fotos, aparece um botão com esse ano no filtro da galeria.
 ### Vídeos
 Vídeos curtos (poucos MB) podem ir em `assets/video/`. Vídeos grandes não: o GitHub recusa arquivos acima de 100 MB.
 Publique-os no YouTube (pode ser "não listado") ou deixe-os no Drive com "qualquer pessoa com o link", e informe só o ID.
+
+### Fotos por ano
+As fotos de cada edição ficam em `assets/img/anos/<ano>/` (versão grande, até 1600px) e `assets/img/anos/<ano>/mini/` (miniatura da galeria).
+A lista é gerada em `assets/js/fotos.js`. Para adicionar fotos novas, coloque os dois arquivos nas pastas e acrescente o caminho em `fotos.js`.
