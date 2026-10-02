@@ -315,3 +315,6 @@ section, header, footer { position: relative; z-index: 1; }
 .edicao__bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; opacity: .22; filter: grayscale(.4); mix-blend-mode: luminosity; }
 .videos__grid:has(> .video:only-child) { grid-template-columns: min(100%, 760px); }
 @media (max-width: 600px) { .masonry { columns: 2; column-gap: 8px; } .masonry figure { margin-bottom: 8px; border-radius: 10px; } }
+.countdown.is-live .pos { display: flex; flex-direction: column; align-items: center; gap: 6px; max-width: 520px; }
+.countdown.is-live .pos small { text-transform: none; letter-spacing: .02em; font-size: .95rem; color: var(--lavanda); }
+.pos__btn { margin-top: 14px; }

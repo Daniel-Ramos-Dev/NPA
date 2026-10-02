@@ -19,7 +19,7 @@
 
   /* ---------- CONTAGEM REGRESSIVA ---------- */
   const alvo = new Date(D.eventoInicio).getTime();
-  const fim = alvo + 3 * 864e5; // 3 dias
+  const fim = new Date(D.eventoFim).getTime();
   const cd = $("#countdown");
   function tick() {
     const agora = Date.now();
@@ -27,7 +27,8 @@
       cd.classList.add("is-live");
       cd.innerHTML = agora < fim
         ? "<div><b>Estamos acampando!</b><small>reze por nós 💜</small></div>"
-        : "<div><b>Obrigado, Senhor!</b><small>10 anos de NPA</small></div>";
+        : `<div class="pos"><b>${esc(D.posEvento.titulo)}</b><small>${esc(D.posEvento.texto)}</small>${
+            D.instagram ? `<a class="btn pos__btn" href="https://instagram.com/${esc(D.instagram)}" target="_blank" rel="noopener">@${esc(D.instagram)}</a>` : ""}</div>`;
       return;
     }
     let t = Math.floor((alvo - agora) / 1000);
@@ -40,6 +41,8 @@
   tick();
 
   /* ---------- LINHA DO TEMPO ---------- */
+  // Só estes anos aparecem marcados nas fotos e no filtro da galeria
+  const rotulados = D.anosComRotulo || [];
   const tl = $("#timeline");
   tl.innerHTML = D.anos.map((a, i) => {
     const capa = a.capa || a.fotos[0];
@@ -54,7 +57,7 @@
             <div class="tl-card__ano">${a.ano}</div>
             <h3>${esc(a.titulo)}</h3>
             <p>${esc(a.texto)}</p>
-            <span class="tl-card__mais">${a.fotos.length ? `Ver ${a.fotos.length} fotos →` : "Fotos em breve"}</span>
+            ${rotulados.includes(a.ano) && a.fotos.length ? `<span class="tl-card__mais">Ver ${a.fotos.length} fotos →</span>` : ""}
           </div>
         </button>
       </div>`;
@@ -68,9 +71,9 @@
   });
 
   /* ---------- GALERIA ---------- */
-  const todas = D.anos.flatMap((a) => a.fotos.map((src) => ({ src, ano: a.ano })))
+  const todas = D.anos.flatMap((a) => a.fotos.map((src) => ({ src, ano: rotulados.includes(a.ano) ? a.ano : null })))
     .concat((D.momentos || []).map((src) => ({ src, ano: null })));
-  const anosComFotos = D.anos.filter((a) => a.fotos.length).map((a) => a.ano);
+  const anosComFotos = D.anos.filter((a) => a.fotos.length && rotulados.includes(a.ano)).map((a) => a.ano);
   const filtros = $("#filtros"), masonry = $("#masonry"), vazio = $("#galeriaVazio");
   filtros.innerHTML = [`<button role="tab" data-ano="todos" aria-selected="true">Todos</button>`]
     .concat(anosComFotos.map((a) => `<button role="tab" data-ano="${a}" aria-selected="false">${a}</button>`)).join("");

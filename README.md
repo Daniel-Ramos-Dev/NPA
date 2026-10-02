@@ -7,7 +7,7 @@ Site memorial dos 10 anos do **Acampamento Jovem Nasci Pra Te Amar**, da Paróqu
 ## Publicar no GitHub Pages
 1. No repositório, abra **Settings → Pages**.
 2. Em *Source*, escolha **Deploy from a branch**, branch `main`, pasta `/ (root)`.
-3. O site fica em `https://daniel-ramos-dev.github.io/NPA/`.
+3. O site fica em `https://nasciprateamar.me` (domínio próprio, definido no arquivo `CNAME`).
 
 ## Editar conteúdo
 Todo o conteúdo fica em [`assets/js/data.js`](assets/js/data.js):

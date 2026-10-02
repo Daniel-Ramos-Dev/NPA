@@ -10,6 +10,13 @@ const F = "assets/img/fotos/";
 window.NPA = {
   // Início do acampamento (horário de Brasília). A contagem regressiva usa esta data.
   eventoInicio: "2026-10-10T06:00:00-03:00",
+  eventoFim: "2026-10-12T23:59:59-03:00",
+  // Mensagem da abertura depois que o acampamento terminar (pós-NPA)
+  posEvento: { titulo: "Em breve, novidades!", texto: "Vem aí o pós-NPA. Fiquem atentos às nossas redes sociais 💜" },
+  instagram: "", // ex.: "npa.ipitanga" (sem @). Se preenchido, aparece um botão para o perfil.
+  // Anos cujas fotos aparecem com o ano marcado e ganham botão no filtro da galeria.
+  // As fotos dos outros anos aparecem em "Todos", sem ano.
+  anosComRotulo: [2017, 2025],
   paroquia: "Paróquia Santo Amaro de Ipitanga",
   totalJovens: 792,
 
