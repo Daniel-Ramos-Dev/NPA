@@ -186,6 +186,22 @@
     b.innerHTML = `<video src="${b.dataset.src}" autoplay controls playsinline></video>`;
   });
 
+  /* ---------- PATROCINADORES ---------- */
+  $("#apoioGrid").innerHTML = (D.patrocinadores || []).map((p) => {
+    const tag = p.site ? "a" : "div";
+    const href = p.site ? ` href="${esc(p.site)}" target="_blank" rel="noopener"` : "";
+    return `<${tag} class="apoio__card reveal"${href}>
+        <img src="${esc(p.logo)}" alt="${esc(p.nome)}" loading="lazy">
+        <b>${esc(p.nome)}</b>${p.descricao ? `<small>${esc(p.descricao)}</small>` : ""}
+      </${tag}>`;
+  }).join("");
+  const pc = D.patrocinio || {};
+  $("#apoioBotoes").innerHTML = [
+    pc.whatsapp && `<a class="btn btn--zap" href="https://wa.me/${esc(pc.whatsapp.replace(/\D/g, ""))}?text=${encodeURIComponent(pc.mensagem || "")}" target="_blank" rel="noopener">WhatsApp</a>`,
+    pc.email && `<a class="btn btn--linha" href="mailto:${esc(pc.email)}?subject=${encodeURIComponent("Patrocínio NPA")}&body=${encodeURIComponent(pc.mensagem || "")}">${esc(pc.email)}</a>`
+  ].filter(Boolean).join("");
+  $(".apoio__cta").hidden = !pc.whatsapp && !pc.email;
+
   /* ---------- DEPOIMENTOS ---------- */
   const car = $("#carrossel"), dots = $("#carrosselDots");
   car.innerHTML = D.depoimentos.map((d, i) =>

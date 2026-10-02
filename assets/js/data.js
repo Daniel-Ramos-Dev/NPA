@@ -71,6 +71,18 @@ window.NPA = {
     "assets/video/2022/npa2022-17"
   ],
 
+  // Patrocinadores: para adicionar, copie uma linha e troque nome, logo e site (site é opcional).
+  // Coloque o logo em assets/img/patrocinadores/.
+  patrocinadores: [
+    { nome: "Madervillas", descricao: "Tudo em madeira e telha", logo: "assets/img/patrocinadores/madervillas.webp", site: "" }
+  ],
+  // Contato para quem quiser patrocinar. WhatsApp só com números, com DDI e DDD (ex.: "5571999999999").
+  patrocinio: {
+    email: "",
+    whatsapp: "",
+    mensagem: "Olá! Gostaria de saber como patrocinar o Acampamento NPA."
+  },
+
   // Programação 2026 (Projeto NPA)
   programacao: [
     { dia: "Sábado", data: "10/10", nome: "Acolhida e despertar", itens: ["Laudes e saída da igreja", "Dinâmicas de integração", "Pregações e gincana", "Oficinas: feridas e relacionamentos, ansiedade e depressão, identidade e propósito, distrações e vícios", "Momento mariano", "Geração Flashback"] },

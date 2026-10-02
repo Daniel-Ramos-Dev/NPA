@@ -327,3 +327,27 @@ section, header, footer { position: relative; z-index: 1; }
 .clipe span { position: absolute; inset: 0; display: grid; place-items: center; background: linear-gradient(to top, rgba(7, 4, 11, .6), transparent 60%); }
 .clipe span::before { content: ""; width: 0; height: 0; border-left: 18px solid #fff; border-block: 11px solid transparent; margin-left: 4px; filter: drop-shadow(0 0 10px var(--roxo-vivo)); }
 .clipe video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+/* PATROCINADORES */
+.apoio__grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
+.apoio__card {
+  flex: 0 1 300px; display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center;
+  padding: 18px 18px 22px; border-radius: 20px; border: 1px solid var(--borda); background: rgba(15, 9, 23, .75);
+  transition: transform .3s, border-color .3s, box-shadow .3s;
+}
+.apoio__card:hover { transform: translateY(-4px); border-color: var(--lilas); box-shadow: 0 20px 50px -24px var(--roxo-vivo); }
+.apoio__card img { width: 100%; aspect-ratio: 900 / 543; object-fit: cover; border-radius: 12px; margin-bottom: 8px; }
+.apoio__card b { font-family: var(--display); letter-spacing: .08em; font-size: 1.05rem; }
+.apoio__card small { color: var(--texto-suave); }
+.apoio__cta {
+  margin-top: clamp(40px, 6vw, 64px); display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;
+  padding: clamp(26px, 4vw, 40px); border-radius: 24px; border: 1px dashed var(--lilas);
+  background: linear-gradient(120deg, rgba(107, 33, 168, .3), rgba(15, 9, 23, .8));
+}
+.apoio__cta[hidden] { display: none; }
+.apoio__cta h3 { font-family: var(--display); font-size: clamp(1.4rem, 3vw, 1.9rem); }
+.apoio__cta p { color: #d8cde6; max-width: 520px; }
+.apoio__botoes { display: flex; gap: 12px; flex-wrap: wrap; }
+.apoio__botoes .btn { margin-top: 0; text-transform: none; letter-spacing: .02em; }
+.btn--zap { background: linear-gradient(90deg, #128c4a, #25d366); box-shadow: 0 10px 30px -12px #25d366; }
+.btn--linha { background: transparent; border: 1px solid var(--lilas); box-shadow: none; }
